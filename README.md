@@ -1,6 +1,7 @@
 # 🎭 Theater Booking System
 
 System rezerwacji biletów do teatru zbudowany w architekturze chmurowej na platformie Microsoft Azure.
+Link do strony: https://theaterbookingstorage.z6.web.core.windows.net.
 
 ## 📋 Spis treści
 
