@@ -1,0 +1,25 @@
+# ============================================
+# Example Terraform Variables
+# ============================================
+# Skopiuj ten plik jako terraform.tfvars i uzupełnij wartości
+# NIGDY nie commituj pliku terraform.tfvars do repozytorium!
+
+project_name        = "theater-booking"
+location            = "westeurope"
+resource_group_name = "rg-theater-booking"
+
+# SQL Server credentials (zmień na własne!)
+sql_admin_username = "sqladmin"
+sql_admin_password = "ZMIEN_NA_BEZPIECZNE_HASLO_123!"
+
+# Stripe API Keys (opcjonalne, ale wymagane do płatności)
+stripe_secret_key      = "sk_test_..."
+stripe_publishable_key = "pk_test_..."
+
+# Tagi
+tags = {
+  Project     = "Theater Booking"
+  Environment = "Production"
+  ManagedBy   = "Terraform"
+  Course      = "Cloud Computing"
+}

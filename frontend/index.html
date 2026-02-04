@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezerwacja Biletów - Teatr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+    <header>
+        <h1>🎭 Rezerwacja Biletów</h1>
+    </header>
+
+    <main>
+        <!-- Sekcja 1: Wybór wydarzenia -->
+        <section id="events-section" class="section">
+            <h2>Wybierz wydarzenie</h2>
+            <div id="events-list" class="events-grid">
+                <!-- Wydarzenia ładowane dynamicznie -->
+            </div>
+        </section>
+
+        <!-- Sekcja 2: Wybór miejsc -->
+        <section id="seats-section" class="section hidden">
+            <h2>Wybierz miejsca</h2>
+            <div id="event-info" class="event-info"></div>
+
+            <div class="legend">
+                <span class="legend-item"><span class="seat available"></span> Dostępne</span>
+                <span class="legend-item"><span class="seat selected"></span> Wybrane</span>
+                <span class="legend-item"><span class="seat taken"></span> Zajęte</span>
+            </div>
+
+            <div class="stage">SCENA</div>
+            <div id="seat-map" class="seat-map">
+                <!-- Mapa miejsc ładowana dynamicznie -->
+            </div>
+
+            <div id="selection-summary" class="summary">
+                <p>Wybrane miejsca: <span id="selected-seats">-</span></p>
+                <p>Suma: <span id="total-price">0</span> PLN</p>
+                <button id="proceed-btn" class="btn btn-primary" disabled>
+                    Przejdź do danych
+                </button>
+            </div>
+        </section>
+
+        <!-- Sekcja 3: Dane osobowe -->
+        <section id="customer-section" class="section hidden">
+            <h2>Twoje dane</h2>
+            <form id="customer-form">
+                <div class="form-group">
+                    <label for="name">Imię i nazwisko</label>
+                    <input type="text" id="name" name="name" placeholder="Jan Kowalski">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" placeholder="jan@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefon</label>
+                    <input type="text" id="phone" name="phone" placeholder="+48 123 456 789">
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Przejdź do płatności
+                </button>
+            </form>
+        </section>
+
+        <!-- Sekcja 4: Płatność -->
+        <section id="payment-section" class="section hidden">
+            <div class="payment-header">
+                <h2>💳 Bezpieczna płatność</h2>
+                <div class="secure-badge">🔒 Szyfrowane połączenie SSL</div>
+            </div>
+            
+            <div class="payment-container">
+                <div class="payment-summary">
+                    <h3>Podsumowanie zamówienia</h3>
+                    <div id="booking-summary" class="booking-summary"></div>
+                </div>
+                
+                <div class="payment-form">
+                    <h3>Dane karty płatniczej</h3>
+                    <div class="card-icons">
+                        <span>💳 Visa</span>
+                        <span>💳 Mastercard</span>
+                    </div>
+                    <div id="card-element" class="card-element">
+                        <!-- Stripe Card Element -->
+                    </div>
+                    <div id="card-errors" class="error"></div>
+                    
+                    <div class="payment-total">
+                        <span>Do zapłaty:</span>
+                        <span class="total-amount"><span id="pay-amount"></span> PLN</span>
+                    </div>
+                    
+                    <button id="pay-btn" class="btn btn-pay">
+                        <span class="btn-icon">🔐</span>
+                        Zapłać teraz
+                    </button>
+                    
+                    <p class="payment-info">Płatność obsługiwana przez Stripe. Twoje dane są bezpieczne.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sekcja 5: Potwierdzenie -->
+        <section id="confirmation-section" class="section hidden">
+            <h2>✅ Rezerwacja potwierdzona!</h2>
+            <div id="confirmation-details"></div>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

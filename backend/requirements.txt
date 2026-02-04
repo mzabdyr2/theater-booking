@@ -1,0 +1,18 @@
+Flask==2.3.3
+Flask-CORS==4.0.0
+Flask-SQLAlchemy==3.1.1
+gunicorn==21.2.0
+stripe==7.0.0
+pymssql==2.2.11
+python-dotenv==1.0.0
+Werkzeug==2.3.7
+SQLAlchemy==2.0.23
+
+# Monitoring (Azure Application Insights)
+opencensus-ext-azure==1.1.13
+opencensus-ext-flask==0.8.2
+opencensus-ext-logging==0.1.1
+
+# Testing
+pytest==7.4.3
+pytest-cov==4.1.0

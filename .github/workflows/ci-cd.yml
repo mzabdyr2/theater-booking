@@ -1,0 +1,185 @@
+# ============================================
+# GitHub Actions CI/CD Pipeline
+# Theater Booking System
+# ============================================
+# Ten pipeline:
+# 1. Uruchamia testy jednostkowe
+# 2. Deployuje backend na Azure App Service
+# 3. Deployuje frontend na Azure Static Web Apps
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.11'
+  AZURE_WEBAPP_NAME: 'theater-booking-api'
+
+jobs:
+  # ============== JOB 1: TEST ==============
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install pytest pytest-cov
+
+      - name: 🧪 Run tests
+        working-directory: backend
+        run: |
+          pytest tests/ -v --cov=. --cov-report=xml --cov-report=html
+        env:
+          FLASK_ENV: testing
+          SQL_SERVER: ''
+          SQL_DATABASE: ''
+          SQL_USERNAME: ''
+          SQL_PASSWORD: ''
+
+      - name: 📊 Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: backend/htmlcov/
+          retention-days: 7
+
+  # ============== JOB 2: BUILD BACKEND ==============
+  build-backend:
+    name: 🔨 Build Backend
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: 📦 Create deployment package
+        run: |
+          cd backend
+          pip install --target=".python_packages/lib/site-packages" -r requirements.txt
+
+      - name: 📤 Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-app
+          path: backend/
+          retention-days: 1
+
+  # ============== JOB 3: DEPLOY BACKEND ==============
+  deploy-backend:
+    name: 🚀 Deploy Backend to Azure
+    runs-on: ubuntu-latest
+    needs: build-backend
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.webapp-url }}
+    
+    steps:
+      - name: 📥 Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-app
+          path: backend
+
+      - name: 🔑 Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 🚀 Deploy to Azure Web App
+        id: deploy
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          package: backend
+
+      - name: 🔧 Configure App Settings
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          app-settings-json: |
+            [
+              {"name": "SQL_SERVER", "value": "${{ secrets.SQL_SERVER }}", "slotSetting": false},
+              {"name": "SQL_DATABASE", "value": "${{ secrets.SQL_DATABASE }}", "slotSetting": false},
+              {"name": "SQL_USERNAME", "value": "${{ secrets.SQL_USERNAME }}", "slotSetting": false},
+              {"name": "SQL_PASSWORD", "value": "${{ secrets.SQL_PASSWORD }}", "slotSetting": false},
+              {"name": "STRIPE_SECRET_KEY", "value": "${{ secrets.STRIPE_SECRET_KEY }}", "slotSetting": false},
+              {"name": "STRIPE_PUBLISHABLE_KEY", "value": "${{ secrets.STRIPE_PUBLISHABLE_KEY }}", "slotSetting": false}
+            ]
+
+  # ============== JOB 4: DEPLOY FRONTEND ==============
+  deploy-frontend:
+    name: 🌐 Deploy Frontend to Azure Static Web Apps
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "frontend"
+          output_location: ""
+          skip_app_build: true
+
+  # ============== JOB 5: TERRAFORM PLAN ==============
+  terraform-plan:
+    name: 📋 Terraform Plan
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+
+      - name: 🔑 Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 📋 Terraform Init
+        working-directory: terraform
+        run: terraform init
+
+      - name: 📋 Terraform Plan
+        working-directory: terraform
+        run: terraform plan -var="sql_admin_password=${{ secrets.SQL_PASSWORD }}"
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
