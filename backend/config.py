@@ -6,7 +6,8 @@ load_dotenv()
 
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
+    SECRET_KEY = os.environ.get(
+        'SECRET_KEY') or 'dev-secret-key-change-in-production'
 
     # Azure SQL Database connection string
     SQL_SERVER = os.environ.get('SQL_SERVER')

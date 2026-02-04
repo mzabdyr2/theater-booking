@@ -1,6 +1,9 @@
 # ============================================
+
 # INSTRUKCJE ODDANIA PROJEKTU
+
 # Theater Booking System
+
 # ============================================
 
 ## ✅ CO JUŻ JEST GOTOWE:
@@ -39,11 +42,12 @@ git push -u origin main
 GitHub → Repository → Settings → Secrets and variables → Actions
 
 Dodaj te sekrety:
+
 - AZURE_CREDENTIALS (JSON z Service Principal)
 - AZURE_WEBAPP_NAME (np. theater-booking-api)
 - AZURE_STATIC_WEB_APPS_API_TOKEN
 - SQL_SERVER
-- SQL_DATABASE  
+- SQL_DATABASE
 - SQL_USERNAME
 - SQL_PASSWORD
 - STRIPE_SECRET_KEY
@@ -56,6 +60,7 @@ Dodaj te sekrety:
 ### Krok 4: Zrób zrzuty ekranu
 
 Zrób screenshoty z:
+
 1. Działającej aplikacji (strona główna)
 2. Mapy miejsc
 3. Procesu rezerwacji
@@ -70,30 +75,33 @@ Zrób screenshoty z:
 
 ## 📋 PUNKTACJA - CZEGO SIĘ SPODZIEWAĆ:
 
-| Kryterium | Max | Co masz |
-|-----------|-----|---------|
-| Funkcjonalność | 10 | ✅ Pełna rezerwacja + płatności |
-| Architektura | 10 | ✅ 5 usług Azure, uzasadnienie |
-| IaC | 5 | ✅ Terraform kompletny |
-| CI/CD | 5 | ✅ GitHub Actions (test+deploy) |
-| Monitoring | 5 | ✅ App Insights + 3 alerty |
-| Bezpieczeństwo | 5 | ✅ Sekrety w env/KeyVault |
-| Dokumentacja | 5 | ✅ README + ARCHITECTURE.md |
-| Repo/higiena | 2 | ✅ .gitignore, testy |
-| Operacyjność | 3 | ✅ Koszty, cleanup |
-| **RAZEM** | **50** | ~45-50 pkt |
+| Kryterium      | Max    | Co masz                         |
+| -------------- | ------ | ------------------------------- |
+| Funkcjonalność | 10     | ✅ Pełna rezerwacja + płatności |
+| Architektura   | 10     | ✅ 5 usług Azure, uzasadnienie  |
+| IaC            | 5      | ✅ Terraform kompletny          |
+| CI/CD          | 5      | ✅ GitHub Actions (test+deploy) |
+| Monitoring     | 5      | ✅ App Insights + 3 alerty      |
+| Bezpieczeństwo | 5      | ✅ Sekrety w env/KeyVault       |
+| Dokumentacja   | 5      | ✅ README + ARCHITECTURE.md     |
+| Repo/higiena   | 2      | ✅ .gitignore, testy            |
+| Operacyjność   | 3      | ✅ Koszty, cleanup              |
+| **RAZEM**      | **50** | ~45-50 pkt                      |
 
 Bonus (do +10):
+
 - Autoskalowanie - można dodać
 - Dodatkowe testy - masz 13
 
 ## 🆘 PROBLEMY?
 
 Jeśli CI/CD nie działa:
+
 - Sprawdź GitHub Secrets
 - Sprawdź logi w Actions
 
 Jeśli Terraform nie działa:
+
 - Sprawdź az login
 - Sprawdź subscription
 

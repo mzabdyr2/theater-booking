@@ -2,29 +2,33 @@
 
 ## 📋 Informacje podstawowe
 
-| Pole | Wartość |
-|------|---------|
-| **Nazwa projektu** | Theater Booking System |
-| **Temat** | System rezerwacji biletów do teatru |
-| **Chmura** | Microsoft Azure |
-| **Zespół** | Student (projekt indywidualny) |
-| **Data** | Luty 2026 |
+| Pole               | Wartość                             |
+| ------------------ | ----------------------------------- |
+| **Nazwa projektu** | Theater Booking System              |
+| **Temat**          | System rezerwacji biletów do teatru |
+| **Chmura**         | Microsoft Azure                     |
+| **Zespół**         | Student (projekt indywidualny)      |
+| **Data**           | Luty 2026                           |
 
 ---
 
 ## 1. 🎯 Opis projektu
 
 ### Problem
+
 Teatry potrzebują nowoczesnego systemu do rezerwacji biletów online, który pozwala widzom samodzielnie wybierać miejsca na sali i płacić za bilety bez konieczności wizyty w kasie.
 
 ### Rozwiązanie
+
 System webowy umożliwiający:
+
 - Przeglądanie repertuaru wydarzeń
 - Interaktywny wybór miejsc na planie sali
 - Rezerwację i płatność online
 - Otrzymanie potwierdzenia z numerem rezerwacji
 
 ### Główne funkcjonalności:
+
 1. **Katalog wydarzeń** - lista spektakli z opisami i datami
 2. **Mapa miejsc** - interaktywna wizualizacja sali z kategoriami miejsc
 3. **System rezerwacji** - tworzenie rezerwacji z walidacją dostępności
@@ -134,24 +138,24 @@ System webowy umożliwiający:
 
 ### Tabela usług
 
-| Usługa Azure | Rola | Uzasadnienie wyboru |
-|--------------|------|---------------------|
-| **App Service** | Backend API | Prosty deployment Python/Flask, automatyczne skalowanie, wbudowane logi |
-| **Static Web Apps** | Frontend | Darmowy hosting statycznych plików, globalny CDN, automatyczny deploy z GitHub |
-| **Azure SQL Database** | Baza danych | Zarządzana baza relacyjna, kompatybilność z SQLAlchemy, backup automatyczny |
-| **Application Insights** | Monitoring | Pełna observability, trace requestów, dependency tracking |
-| **Key Vault** | Sekrety | Bezpieczne przechowywanie credentials, integracja z App Service |
-| **Log Analytics** | Agregacja logów | Centralne miejsce na logi, KQL queries, retention policies |
+| Usługa Azure             | Rola            | Uzasadnienie wyboru                                                            |
+| ------------------------ | --------------- | ------------------------------------------------------------------------------ |
+| **App Service**          | Backend API     | Prosty deployment Python/Flask, automatyczne skalowanie, wbudowane logi        |
+| **Static Web Apps**      | Frontend        | Darmowy hosting statycznych plików, globalny CDN, automatyczny deploy z GitHub |
+| **Azure SQL Database**   | Baza danych     | Zarządzana baza relacyjna, kompatybilność z SQLAlchemy, backup automatyczny    |
+| **Application Insights** | Monitoring      | Pełna observability, trace requestów, dependency tracking                      |
+| **Key Vault**            | Sekrety         | Bezpieczne przechowywanie credentials, integracja z App Service                |
+| **Log Analytics**        | Agregacja logów | Centralne miejsce na logi, KQL queries, retention policies                     |
 
 ### Spełnienie wymagań minimalnego zakresu technicznego:
 
-| Wymaganie | Realizacja |
-|-----------|------------|
-| Min. 2 usługi obliczeniowe/integracyjne | ✅ App Service + Static Web Apps |
-| Warstwa danych | ✅ Azure SQL Database |
-| CI/CD | ✅ GitHub Actions |
-| Monitoring/observability | ✅ Application Insights + Log Analytics |
-| IaC | ✅ Terraform |
+| Wymaganie                               | Realizacja                              |
+| --------------------------------------- | --------------------------------------- |
+| Min. 2 usługi obliczeniowe/integracyjne | ✅ App Service + Static Web Apps        |
+| Warstwa danych                          | ✅ Azure SQL Database                   |
+| CI/CD                                   | ✅ GitHub Actions                       |
+| Monitoring/observability                | ✅ Application Insights + Log Analytics |
+| IaC                                     | ✅ Terraform                            |
 
 ---
 
@@ -159,10 +163,10 @@ System webowy umożliwiający:
 
 ### Sekrety przechowywane w Azure Key Vault:
 
-| Sekret | Opis | Użycie |
-|--------|------|--------|
+| Sekret                  | Opis                           | Użycie      |
+| ----------------------- | ------------------------------ | ----------- |
 | `sql-connection-string` | Pełny connection string do SQL | Backend API |
-| `stripe-secret-key` | Klucz tajny Stripe | Backend API |
+| `stripe-secret-key`     | Klucz tajny Stripe             | Backend API |
 
 ### Zmienne środowiskowe w App Service:
 
@@ -190,12 +194,12 @@ APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=xxx;IngestionEndpoint=x
 
 ### GitHub Secrets (dla CI/CD):
 
-| Secret | Opis |
-|--------|------|
-| `AZURE_CREDENTIALS` | JSON z Service Principal |
-| `SQL_PASSWORD` | Hasło do bazy |
-| `STRIPE_SECRET_KEY` | Klucz Stripe |
-| `ARM_*` | Credentials dla Terraform |
+| Secret              | Opis                      |
+| ------------------- | ------------------------- |
+| `AZURE_CREDENTIALS` | JSON z Service Principal  |
+| `SQL_PASSWORD`      | Hasło do bazy             |
+| `STRIPE_SECRET_KEY` | Klucz Stripe              |
+| `ARM_*`             | Credentials dla Terraform |
 
 ---
 
@@ -203,15 +207,15 @@ APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=xxx;IngestionEndpoint=x
 
 ### Szacunkowe koszty miesięczne
 
-| Usługa | SKU | Koszt USD/miesiąc | Limity |
-|--------|-----|-------------------|--------|
-| App Service Plan | B1 | ~$13.14 | 1.75 GB RAM, 1 vCPU |
-| Azure SQL Database | Basic | ~$4.90 | 5 DTU, 2 GB storage |
-| Static Web Apps | Free | $0.00 | 100 GB bandwidth |
-| Application Insights | Pay-as-you-go | ~$2.30 | 5 GB/miesiąc included |
-| Key Vault | Standard | ~$0.03 | 10,000 operations |
-| Log Analytics | PerGB2018 | ~$2.30 | 5 GB/miesiąc included |
-| **RAZEM** | | **~$22-25** | |
+| Usługa               | SKU           | Koszt USD/miesiąc | Limity                |
+| -------------------- | ------------- | ----------------- | --------------------- |
+| App Service Plan     | B1            | ~$13.14           | 1.75 GB RAM, 1 vCPU   |
+| Azure SQL Database   | Basic         | ~$4.90            | 5 DTU, 2 GB storage   |
+| Static Web Apps      | Free          | $0.00             | 100 GB bandwidth      |
+| Application Insights | Pay-as-you-go | ~$2.30            | 5 GB/miesiąc included |
+| Key Vault            | Standard      | ~$0.03            | 10,000 operations     |
+| Log Analytics        | PerGB2018     | ~$2.30            | 5 GB/miesiąc included |
+| **RAZEM**            |               | **~$22-25**       |                       |
 
 ### Optymalizacje kosztowe:
 
@@ -227,7 +231,9 @@ APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=xxx;IngestionEndpoint=x
    - Można skonfigurować Logic Apps do wyłączania App Service w weekendy
 
 ### Alerty kosztowe:
+
 Zalecane ustawienie alertu budżetowego w Azure Cost Management:
+
 - Alert przy 80% budżetu miesięcznego
 - Alert przy 100% budżetu
 
@@ -271,11 +277,14 @@ az group delete --name rg-theater-booking --yes --no-wait
 - [ ] Usuń GitHub Secrets (jeśli repo będzie publiczne)
 
 ### UWAGA: Soft Delete
+
 Azure SQL i Key Vault mają domyślnie włączone soft delete:
+
 - Key Vault: 7-90 dni (konfigurowalne)
 - SQL Server: 7 dni
 
 Aby całkowicie usunąć:
+
 ```bash
 # Purge deleted Key Vault
 az keyvault purge --name kv-theater-booking-xxx
@@ -289,13 +298,13 @@ az keyvault purge --name kv-theater-booking-xxx
 
 ### Metryki monitorowane
 
-| Metryka | Źródło | Próg alertu | Uzasadnienie |
-|---------|--------|-------------|--------------|
-| Response Time | App Service | > 3s (avg 5min) | UX - użytkownicy opuszczają wolne strony |
-| HTTP 5xx Errors | App Service | > 5 (5min) | Krytyczne błędy serwera |
-| DTU Usage | SQL Database | > 80% (15min) | Wydajność bazy danych |
-| Failed Requests | App Insights | > 10 (5min) | Problemy z aplikacją |
-| Availability | App Insights | < 99% | SLA monitoring |
+| Metryka         | Źródło       | Próg alertu     | Uzasadnienie                             |
+| --------------- | ------------ | --------------- | ---------------------------------------- |
+| Response Time   | App Service  | > 3s (avg 5min) | UX - użytkownicy opuszczają wolne strony |
+| HTTP 5xx Errors | App Service  | > 5 (5min)      | Krytyczne błędy serwera                  |
+| DTU Usage       | SQL Database | > 80% (15min)   | Wydajność bazy danych                    |
+| Failed Requests | App Insights | > 10 (5min)     | Problemy z aplikacją                     |
+| Availability    | App Insights | < 99%           | SLA monitoring                           |
 
 ### Skonfigurowane alerty (w Terraform)
 
@@ -305,7 +314,7 @@ resource "azurerm_monitor_metric_alert" "response_time" {
   name        = "alert-high-response-time"
   description = "Alert when average response time exceeds 3 seconds"
   severity    = 2  # Warning
-  
+
   criteria {
     metric_name = "HttpResponseTime"
     aggregation = "Average"
@@ -319,7 +328,7 @@ resource "azurerm_monitor_metric_alert" "server_errors" {
   name        = "alert-server-errors"
   description = "Alert when HTTP 5xx errors exceed 5"
   severity    = 1  # Critical
-  
+
   criteria {
     metric_name = "Http5xx"
     aggregation = "Total"
@@ -333,7 +342,7 @@ resource "azurerm_monitor_metric_alert" "db_dtu" {
   name        = "alert-database-dtu"
   description = "Alert when DTU usage exceeds 80%"
   severity    = 2  # Warning
-  
+
   criteria {
     metric_name = "dtu_consumption_percent"
     aggregation = "Average"
@@ -346,6 +355,7 @@ resource "azurerm_monitor_metric_alert" "db_dtu" {
 ### Dashboards
 
 **Application Insights dostarcza:**
+
 - Live Metrics Stream - dane w czasie rzeczywistym
 - Application Map - mapa zależności
 - Failures - analiza błędów
@@ -354,12 +364,14 @@ resource "azurerm_monitor_metric_alert" "db_dtu" {
 ### Logi
 
 **Zbierane logi:**
+
 - Flask application logs (INFO+)
 - HTTP request/response logs
 - SQL query logs (dependencies)
 - Stripe API calls (dependencies)
 
 **Przykładowe zapytanie KQL:**
+
 ```kusto
 requests
 | where timestamp > ago(24h)
@@ -389,6 +401,7 @@ requests
 5. **terraform-plan** - Plan zmian infrastruktury (tylko PR)
 
 ### Triggery:
+
 - `push` do `main` / `master`
 - `pull_request` do `main` / `master`
 - `workflow_dispatch` - ręczne uruchomienie
@@ -399,15 +412,16 @@ requests
 
 ### Działające URL:
 
-| Komponent | URL |
-|-----------|-----|
-| Frontend | https://purple-river-01c768003.4.azurestaticapps.net |
-| Backend API | https://theater-booking-api.azurewebsites.net |
+| Komponent    | URL                                                      |
+| ------------ | -------------------------------------------------------- |
+| Frontend     | https://purple-river-01c768003.4.azurestaticapps.net     |
+| Backend API  | https://theater-booking-api.azurewebsites.net            |
 | Health Check | https://theater-booking-api.azurewebsites.net/api/health |
 
 ### Zrzuty ekranu
 
-*(Dodaj zrzuty z:)*
+_(Dodaj zrzuty z:)_
+
 1. Strony głównej z listą wydarzeń
 2. Mapy miejsc
 3. Formularza rezerwacji
@@ -421,9 +435,11 @@ requests
 ## 10. 📁 Repozytorium
 
 ### Link do repozytorium:
+
 `https://github.com/[USERNAME]/theater-booking`
 
 ### Struktura:
+
 ```
 theater-booking/
 ├── .github/workflows/     # CI/CD pipelines
@@ -435,6 +451,7 @@ theater-booking/
 ```
 
 ### Historia commitów:
+
 - Używamy konwencjonalnych commit messages
 - Feature branches + Pull Requests
 - Code review przed merge
@@ -454,6 +471,6 @@ theater-booking/
 
 ---
 
-*Dokumentacja wygenerowana dla projektu Theater Booking System*
-*Data: Luty 2026*
-*Kurs: Cloud Computing*
+_Dokumentacja wygenerowana dla projektu Theater Booking System_
+_Data: Luty 2026_
+_Kurs: Cloud Computing_

@@ -10,9 +10,9 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: 'Terraform action'
+        description: "Terraform action"
         required: true
-        default: 'plan'
+        default: "plan"
         type: choice
         options:
           - plan
@@ -20,15 +20,15 @@ on:
           - destroy
 
 env:
-  TF_VERSION: '1.6.0'
-  WORKING_DIR: 'terraform'
+  TF_VERSION: "1.6.0"
+  WORKING_DIR: "terraform"
 
 jobs:
   terraform:
     name: 🏗️ Terraform ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
     environment: production
-    
+
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4

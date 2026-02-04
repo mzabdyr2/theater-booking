@@ -23,21 +23,24 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Azure Application Insights (jeśli skonfigurowane)
-APPINSIGHTS_CONNECTION_STRING = os.environ.get('APPLICATIONINSIGHTS_CONNECTION_STRING')
+APPINSIGHTS_CONNECTION_STRING = os.environ.get(
+    'APPLICATIONINSIGHTS_CONNECTION_STRING')
 if APPINSIGHTS_CONNECTION_STRING:
     try:
         from opencensus.ext.azure.log_exporter import AzureLogHandler
         from opencensus.ext.azure.trace_exporter import AzureExporter
         from opencensus.ext.flask.flask_middleware import FlaskMiddleware
         from opencensus.trace.samplers import ProbabilitySampler
-        
+
         # Dodaj Azure Log Handler
-        logger.addHandler(AzureLogHandler(connection_string=APPINSIGHTS_CONNECTION_STRING))
-        
+        logger.addHandler(AzureLogHandler(
+            connection_string=APPINSIGHTS_CONNECTION_STRING))
+
         # Dodaj middleware do śledzenia requestów
         middleware = FlaskMiddleware(
             app,
-            exporter=AzureExporter(connection_string=APPINSIGHTS_CONNECTION_STRING),
+            exporter=AzureExporter(
+                connection_string=APPINSIGHTS_CONNECTION_STRING),
             sampler=ProbabilitySampler(rate=1.0),
         )
         logger.info("Azure Application Insights configured successfully")
