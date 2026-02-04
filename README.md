@@ -23,11 +23,11 @@ Theater Booking System to aplikacja webowa umożliwiająca:
 - Przeglądanie dostępnych wydarzeń teatralnych
 - Interaktywny wybór miejsc na sali
 - Rezerwację biletów online
-- Płatności online przez Stripe
+- Płatności online przez Stripe (demo dla testów)
 
 ### Główne funkcje:
 
-- 🎫 Rezerwacja biletów na wydarzenia teatralne
+- 🎫 Rezerwacja biletów na wydarzenia teatralne (obecnie 1)
 - 💺 Interaktywna mapa miejsc z kategoriami (VIP, Standard, Economy)
 - 💳 Bezpieczne płatności online (Stripe)
 - 📧 Potwierdzenie rezerwacji z numerem referencyjnym
@@ -449,8 +449,8 @@ az group delete --name rg-theater-booking --yes --no-wait
 
 ## 👥 Autorzy
 
-- Student (projekt indywidualny)
-- Kurs: Cloud Computing, Semestr zimowy 2025/2026
+- Maciej Zabdyr, Filip Przyczyna
+- Kurs: Obliczenia w chmurze, Semestr zimowy 2025/2026
 
 ## 📄 Licencja
 
